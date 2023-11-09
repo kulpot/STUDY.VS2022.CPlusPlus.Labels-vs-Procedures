@@ -26,7 +26,8 @@ doit proc			; proc -- procedure
 
 	;	---------------------- Labels vs Procedures ---------------------------------------------
 	; ref link:https://www.youtube.com/watch?v=jlchFQuOwCc&list=PLRwVmtr-pp05c1HTBj1no6Fl6C6mlxYDG&index=43
-	; proc -- procedure
+	; proc -- procedure - outside assembly program call, 
+	; labels -- looks like proc with ":"  , can only be called inside assembly program, while doit proc is outside 
 
 	;; static data -- RAM -- Stack -- popping out of stack -- LIFO -- LastInFirstOut -- plate reference
 	;int count
@@ -96,14 +97,14 @@ back2:
 	jl again
 	ret
 
-CalculateNextPower:
-	; Next power:	; redundant code
-	mov eax, power
-	mul ebx			
-	mov power, eax
-	inc count
-	;jmp back1			; BUG: theres back and back2 requires procedures
-	ret
+;CalculateNextPower:
+;	; Next power:	; redundant code
+;	mov eax, power
+;	mul ebx			
+;	mov power, eax
+;	inc count
+;	;jmp back1			; BUG: theres back and back2 requires procedures
+;	ret
 
 
 
@@ -987,5 +988,15 @@ CalculateNextPower:
 	; I went to the run, and I bought some dive.	; wrong semantics
 
 doit endp
+
+;CalculateNextPower proc
+CalculateNextPower:
+	; Next power:	
+	mov eax, power
+	mul ebx			
+	mov power, eax
+	inc count		
+	ret
+;CalculateNextPower endp
 
 end
