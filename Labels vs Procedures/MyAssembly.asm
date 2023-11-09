@@ -24,8 +24,8 @@ doit proc
 	; INTELs least significant value - also called LSb(LeastSignificantBit)
 	; In computing, the least significant bit (LSb) is the bit position in a binary integer representing the binary 1s place of the integer. Similarly, the most significant bit (MSb) represents the highest-order place of the binary integer.
 
-	; ------------------------ Assembly - Stack Part 2 --------------------------------------------
-	; ref link:https://www.youtube.com/watch?v=fMaLPvdP6ZE&list=PLRwVmtr-pp05c1HTBj1no6Fl6C6mlxYDG&index=43
+	;	---------------------- Labels vs Procedures ---------------------------------------------
+	; ref link:https://www.youtube.com/watch?v=jlchFQuOwCc&list=PLRwVmtr-pp05c1HTBj1no6Fl6C6mlxYDG&index=43
 
 
 	;; static data -- RAM -- Stack -- popping out of stack -- LIFO -- LastInFirstOut -- plate reference
@@ -47,6 +47,43 @@ doit proc
 	pop edx			; pop -- push eax to edx	
 	pop eax			; pop -- push 14 to eax
 	pop ecx			; pop -- push 8 to ecx		;bugs: if last push stack is not use
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	; ------------------------ Assembly - Stack Part 2 --------------------------------------------
+	; ref link:https://www.youtube.com/watch?v=fMaLPvdP6ZE&list=PLRwVmtr-pp05c1HTBj1no6Fl6C6mlxYDG&index=43
+
+
+	;; static data -- RAM -- Stack -- popping out of stack -- LIFO -- LastInFirstOut -- plate reference
+	;int count
+	;add power, 8
+	;inc count
+	;inc count
+	;add power, 99
+	;inc power
+
+	;push 8			; push -- put data on a stack
+	;push 14
+	;push eax		; INTELs least significant value in hexa - c0 1f 12 00 -- registers - 00123FC0
+	;push eax		; INTELs least significant value in hexa - c0 1f 12 00 -- registers - 00123FC0
+	;push 72
+	;
+	;pop ebx			; pop -- last push(LIFO) -- 72 to ebx
+	;pop ecx			; pop -- push eax to ecx
+	;pop edx			; pop -- push eax to edx	
+	;pop eax			; pop -- push 14 to eax
+	;pop ecx			; pop -- push 8 to ecx		;bugs: if last push stack is not use
 
 
 
