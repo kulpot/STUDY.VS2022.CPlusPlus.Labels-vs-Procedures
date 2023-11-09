@@ -16,7 +16,7 @@ power dword 1		; ----- Assembly - Stack 1, 2--------- Alternating Operations - M
 
 .code
 
-doit proc
+doit proc			; proc -- procedure
 
 	; this is a comment i can type whatever i like after a semicolon and assembler will ignore it
 	; static data -- ex. count dword 0 -- static data stays until the duration of the program
@@ -26,7 +26,7 @@ doit proc
 
 	;	---------------------- Labels vs Procedures ---------------------------------------------
 	; ref link:https://www.youtube.com/watch?v=jlchFQuOwCc&list=PLRwVmtr-pp05c1HTBj1no6Fl6C6mlxYDG&index=43
-
+	; proc -- procedure
 
 	;; static data -- RAM -- Stack -- popping out of stack -- LIFO -- LastInFirstOut -- plate reference
 	;int count
@@ -36,20 +36,74 @@ doit proc
 	;add power, 99
 	;inc power
 
-	push 8			; push -- put data on a stack
-	push 14
-	push eax		; INTELs least significant value in hexa - c0 1f 12 00 -- registers - 00123FC0
-	push eax		; INTELs least significant value in hexa - c0 1f 12 00 -- registers - 00123FC0
-	push 72
+	;push 8			; push -- put data on a stack
+	;push 14
+	;push eax		; INTELs least significant value in hexa - c0 1f 12 00 -- registers - 00123FC0
+	;push eax		; INTELs least significant value in hexa - c0 1f 12 00 -- registers - 00123FC0
+	;push 72
+	;
+	;pop ebx			; pop -- last push(LIFO) -- 72 to ebx
+	;pop ecx			; pop -- push eax to ecx
+	;pop edx			; pop -- push eax to edx	
+	;pop eax			; pop -- push 14 to eax
+	;pop ecx			; pop -- push 8 to ecx		;bugs: if last push stack is not use
 
-	pop ebx			; pop -- last push(LIFO) -- 72 to ebx
-	pop ecx			; pop -- push eax to ecx
-	pop edx			; pop -- push eax to edx	
-	pop eax			; pop -- push 14 to eax
-	pop ecx			; pop -- push 8 to ecx		;bugs: if last push stack is not use
 
+		
+	; * 2^1 + 2^2 * 2^3 + 2^4 * 2^5 + 2^6 +..... 2^n
 
+	;	 loop(ebx)		Power(power)	total(ecx)		totalHex
+;		2^1				2				2				2
+;		2^2				4				6				6
+;		2^3				8				48				30
+;		2^4				16				64				40
+;		2^5				32				2048			800
+;		2^6				64				2112			840
 
+	mov ebx, 2			; Base
+	;xor ecx, ecx		; 0 out ecx -- startout in zero erases the total
+	mov ecx, 1
+
+again:				; loop mul to add
+	;;;;;;;; Next power:	; redundant code
+	;;;;;;;mov eax, power		; for intel structure running eax
+	;;;;;;;mul ebx				; for intel structure running eax
+	;;;;;;;mov power, eax		; for intel structure running eax
+	;;;;;;;inc count
+
+	;jmp CalculateNextPower			; jump is highly than goto
+	call CalculateNextPower			; call is the same as jmp
+back1:
+	; Multiply the current power to the total
+	mov eax, power
+	mul ecx				; replace total to ecx
+	mov ecx, eax		; replace total to ecx
+
+	;;;;;;;; Next power:	; redundant code
+	;;;;;;;mov eax, power
+	;;;;;;;mul ebx			
+	;;;;;;;mov power, eax
+	;;;;;;;inc count
+
+	;jmp CalculateNextPower
+	call CalculateNextPower
+back2:
+	; Add the power to total
+	add ecx, power
+
+	; Repeat if necessary
+	cmp count, 5		
+	jl again
+	ret
+
+CalculateNextPower:
+	; Next power:	; redundant code
+	mov eax, power
+	mul ebx			
+	mov power, eax
+	inc count
+	;jmp back1			; BUG: theres back and back2 requires procedures
+	ret
 
 
 
